@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a>
+ <img width=200px height=200px src="./Front/src/Assets/logo.jpg" alt="Project logo"></a>
 </p>
 
 <h3 align="center">TikTak</h3>
@@ -8,8 +8,8 @@
 <div align="center">
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
+[![GitHub Issues](https://img.shields.io/github/issues/kylelobo/The-Documentation-Compendium.svg)](https://github.com/Efe49/TikTak/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/Efe49/TikTak/pulls)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 </div>
@@ -104,15 +104,22 @@ hacer un npm install tanto en la carpeta Back como en la carpeta Front para cons
 
 Despues lanzamos un
 
-# npm start
+<p align="center">
+ npm start
+
+</p>
 
 o
 
-# npm run
+<p align="center">
+ npm run
 
+</p>
 o
+<p align="center">
+ npm run-dev
 
-# npm run-dev
+</p>
 
 tanto en la carpeta Front para lanzar el frontend como en la carpeta back para lanzar el backend.
 (Es posible hacer un deployment por separado haciendo un mock de las respuestas del back en el caso del front
