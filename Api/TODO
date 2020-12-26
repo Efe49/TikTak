@@ -1,0 +1,7 @@
+
+DONE Modificar bd seguidos seguidores
+add en get publicaciones comprobacion si hay token o no para listar todas o solo seguidos
+DONE get usuario loggeado
+DONE add isAuth a los cruds
+add login
+

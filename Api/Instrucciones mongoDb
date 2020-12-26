@@ -1,0 +1,6 @@
+Instalar mongodb & mongodb compass
+copiar a carpeta data na ruta C:\   para ter a base de datos co mock creado
+lanzar dende a carpeta C:\Program Files\MongoDB\Server\4.4\bin mongod.exe
+OPCIONAL PARA MONITORIZAR A BD en mongodb compass utilizar a url : 'mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false'
+
+lanzar npm run dev dende unha consola na carpeta deste proxecto

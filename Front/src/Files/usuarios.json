@@ -1,0 +1,162 @@
+[{
+  "_id": {
+    "$oid": "5fda37c92848d71e18c9a536"
+  },
+  "profilePic": "carlosPicture",
+  "userName": "CMR444",
+  "surname": "Carlos Mato",
+  "company": "ESEI",
+  "email": "carlos@email.com",
+  "seguidores": 4,
+  "seguidos": 3,
+  "id": "3gs",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fda384d2848d71e18c9a537"
+  },
+  "profilePic": "carlosPicture",
+  "userName": "CMR444",
+  "surname": "Carlos Mato",
+  "company": "ESEI",
+  "email": "carlos@email.com",
+  "seguidores": 4,
+  "seguidos": 3,
+  "id": "3gs",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fda386a2848d71e18c9a538"
+  },
+  "profilePic": "carlosPicture",
+  "userName": "CMR444",
+  "surname": "Carlos Mato",
+  "company": "ESEI",
+  "email": "carlos@email.com",
+  "seguidores": 4,
+  "seguidos": 3,
+  "id": "asafsdfasdfasdfasdfadasdfasdf",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fda39052848d71e18c9a539"
+  },
+  "profilePic": "carlosPicture",
+  "userName": "CMR444",
+  "surname": "Carlos Mato",
+  "company": "ESEI",
+  "email": "carlos@email.com",
+  "seguidores": 4,
+  "seguidos": 3,
+  "id": "asafsdfasdfasdfasdfadasdfasdf",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fda3a41d91d38343c4b4705"
+  },
+  "profilePic": "carlosPicture",
+  "userName": "CMR444",
+  "surname": "Carlos Mato",
+  "company": "ESEI",
+  "email": "carlos@email.com",
+  "seguidores": 4,
+  "seguidos": 3,
+  "id": "asafsdfasdfasdfasdfadasdfasdf",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fda3b18df05d05b08857fd4"
+  },
+  "id": "5fda2a5d2c51d6766dbb4d6e",
+  "profilePic": "http://placehold.it/32x32",
+  "userName": "Margie",
+  "surname": "Golden",
+  "company": "LUNCHPOD",
+  "email": "margiegolden@lunchpod.com",
+  "seguidores": 10,
+  "seguidos": 4
+},{
+  "_id": {
+    "$oid": "5fda3b18df05d05b08857fd5"
+  },
+  "id": "5fda2a5d6c7ec7e440dca314",
+  "profilePic": "http://placehold.it/32x32",
+  "userName": "Freeman",
+  "surname": "Mosley",
+  "company": "MATRIXITY",
+  "email": "freemanmosley@matrixity.com",
+  "seguidores": 5,
+  "seguidos": 2
+},{
+  "_id": {
+    "$oid": "5fda3b18df05d05b08857fd6"
+  },
+  "id": "5fda2a5d26177b7af64d7738",
+  "profilePic": "http://placehold.it/32x32",
+  "userName": "Harriet",
+  "surname": "Lindsey",
+  "company": "SUREMAX",
+  "email": "harrietlindsey@suremax.com",
+  "seguidores": 10,
+  "seguidos": 0
+},{
+  "_id": {
+    "$oid": "5fda3b18df05d05b08857fd7"
+  },
+  "id": "5fda2a5db63e55dcc2ad1883",
+  "profilePic": "http://placehold.it/32x32",
+  "userName": "Marissa",
+  "surname": "Hanson",
+  "company": "ZILODYNE",
+  "email": "marissahanson@zilodyne.com",
+  "seguidores": 10,
+  "seguidos": 10
+},{
+  "_id": {
+    "$oid": "5fda3b18df05d05b08857fd8"
+  },
+  "id": "5fda2a5d280fcc5461b268db",
+  "profilePic": "http://placehold.it/32x32",
+  "userName": "Gates",
+  "surname": "Hines",
+  "company": "ZILCH",
+  "email": "gateshines@zilch.com",
+  "seguidores": 2,
+  "seguidos": 1
+},{
+  "_id": {
+    "$oid": "5fda3b18df05d05b08857fd9"
+  },
+  "id": "5fda2a5db35846711cb252d4",
+  "profilePic": "http://placehold.it/32x32",
+  "userName": "Stephanie",
+  "surname": "Drake",
+  "company": "COMCUR",
+  "email": "stephaniedrake@comcur.com",
+  "seguidores": 6,
+  "seguidos": 2
+},{
+  "_id": {
+    "$oid": "5fda3b18df05d05b08857fda"
+  },
+  "id": "5fda2a5dd69da69934dc27f9",
+  "profilePic": "http://placehold.it/32x32",
+  "userName": "Jeanette",
+  "surname": "Chandler",
+  "company": "ZAGGLE",
+  "email": "jeanettechandler@zaggle.com",
+  "seguidores": 4,
+  "seguidos": 3
+},{
+  "_id": {
+    "$oid": "5fda3b6175a2eb5ac84d5fa2"
+  },
+  "profilePic": "carlosPicture",
+  "userName": "CMR444",
+  "name": "Carlos Mato",
+  "email": "carlos@email.com",
+  "seguidores": 4,
+  "seguidos": 3,
+  "id": "asafsdfasdfasdfasdfadasdfasdf",
+  "__v": 0
+}]

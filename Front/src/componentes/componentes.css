@@ -1,0 +1,228 @@
+/*Fichero .css que contiene los estilos de la interfaz y sus elementos
+*/
+
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.login-wrapper {
+    height: 100%;
+}
+.box {
+    position: relative;
+    top: 0;
+    opacity: 1;
+    float: left;
+    padding: 60px 50px 40px 50px;
+    width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    z-index: 5;
+    max-width: 330px;
+  }
+  
+  .box.back {
+    transform: scale(.95);
+    -webkit-transform: scale(.95);
+    -ms-transform: scale(.95);
+    top: -20px;
+    opacity: .8;
+    z-index: -1;
+  }
+  
+  .box:before {
+    content: "";
+    width: 100%;
+    height: 30px;
+    border-radius: 10px;
+    position: absolute;
+    top: -10px;
+    background: rgba(255, 255, 255, .6);
+    left: 0;
+    transform: scale(.95);
+    -webkit-transform: scale(.95);
+    -ms-transform: scale(.95);
+    z-index: -1;
+  }
+  
+  .login-wrapper .example-form {
+    min-width: 100%;
+    max-width: 300px;
+    width: 100%;
+  }
+  
+  .login-wrapper .example-full-width,
+  .login-wrapper .btn-block {
+    width: 100%;
+  }
+  
+  .login-wrapper mat-card-header {
+    text-align: center;
+    width: 100%;
+    display: block;
+    font-weight: 700;
+  }
+  
+  .login-wrapper mat-card-header mat-card-title {
+    font-size: 30px;
+    margin: 0;
+  }
+  
+  .login-wrapper .mat-card {
+    padding: 40px 70px 50px;
+  }
+  
+  .login-wrapper .mat-stroked-button {
+    border: 1px solid currentColor;
+    line-height: 54px;
+    background: #FFF7FA;
+  }
+  
+  .login-wrapper .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0.8375em 0;
+  }
+  .login {
+    font-size: 48px;
+
+}
+.headerTik{
+    background-color: #31e89fb3;
+}
+.logoTik{
+   max-height: 100px;
+   max-width: 100px;
+width:auto;}
+
+   .btn-login{
+       background-color: #F86C65;
+   }
+.post{
+    width: fit-content;
+    max-width: 44rem;
+}
+.card{
+    margin-top: 4rem;
+}
+.card-body{
+    background-color: rgba(49, 232, 159,0.2);
+}
+.post-box{
+  max-width: 45rem;
+    border-width: 0.5rem;
+    border-color: rgba(0, 0, 0, 0.4);
+}
+.dislike:hover{
+    color: #F86C65;
+}
+.like:hover{
+    color: #31E89F;
+}
+.share:hover{
+    color: #31E8E8;
+}
+.comment:hover{
+    color: #31E8E8;
+}
+.user:hover{
+    color: #31C6E8;
+}
+.dislike{
+    color: black;
+}
+.like{
+    color: black;
+}
+.share{
+    color: black;
+}
+.comment{
+    color: #000;
+}
+.user{
+    font-weight: bolder;
+    text-decoration: none;
+        color: black;
+}
+.card-title{
+    font-weight: bold;
+}
+.comentario{
+    font-weight: bold;
+}
+.comentariotext{
+    font-weight: lighter;
+}
+.comentariosTitle{
+    font-weight: bold;
+    background-color: rgba(49, 232, 159,0.0);
+
+}
+.comentarioContainer{
+    background-color: rgba(244, 230, 163,0.4);
+
+}
+.userView{
+    padding-left: 10rem;
+    padding-right: 10rem;
+}
+.fotoPerfilUsuario{
+    max-width: 30rem;
+    max-height: 30rem;
+}
+.publicacionesUsuario{
+    max-width: 25rem;
+}
+.footerTik{
+    background-color: rgba(49, 232, 159,0.7);
+
+    height: 2rem;
+    bottom: 0;
+    width: 100% ;
+position: fixed;
+}
+.footerLink{
+    color: black;
+}
+.container-fluid{
+    background-color: #fff;
+}
+.center_div{
+    margin: 0 auto;
+    width:50%; /* value of your choice which suits your alignment */
+
+}
+.text-center {
+    text-align: center;
+  }
+.border-form{
+    border-width: thick;
+    border-color: #862D38;
+    margin:20px;
+    padding:20px;
+}
+
+.nav-tool-items{
+    min-width: 400px;
+}
+
+.home-buttons{
+    min-width: 400px;
+}
+
+.login-box{
+    margin: auto;
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.custom-file{
+    max-width:300px;
+}
