@@ -2,14 +2,15 @@ import Publicacion from './Publicacion'
 
 const PublicacionesList = (props) => (
 
-    <ul class="nav container mx-auto">
-        <div class="row mx-auto">
-            <div class="post-box mx-auto border-dark">
+    <ul className="nav container mx-auto">
+        <div className="row mx-auto">
+            <div className="post-box mx-auto border-dark">
                 
                 {props.publicaciones_data.map(
-                    publicacion => (
+                    (publicacion,i) => (
 
                         <Publicacion
+                            key = {i}
                             _id = {publicacion._id}
                             id = {publicacion.id}
                             contenido = {publicacion.contenido}

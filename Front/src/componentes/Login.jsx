@@ -61,25 +61,25 @@ var urlencoded = new URLSearchParams()
    
 render(){
     return(
-    <div class="container login-box">
-        <div class="center_div px-auto border mt-5 mb-5">
-            <h1 class="text-center mt-4 mb-3" >LOGIN</h1>
-            <div class="mx-auto px-auto">
-                <form class="form " onSubmit={this.handleOnChangeRoute}>
-                    <div class="form-group row px-auto ml-5 mr-5">
+    <div className="container login-box">
+        <div className="center_div px-auto border mt-5 mb-5">
+            <h1 className="text-center mt-4 mb-3" >LOGIN</h1>
+            <div className="mx-auto px-auto">
+                <form className="form " onSubmit={this.handleOnChangeRoute}>
+                    <div className="form-group row px-auto ml-5 mr-5">
                         <label> {<Translate string={"username"}/>} : </label>
-                        <input type = 'text' name = 'userName' id = 'userName' class = 'form-control' /><br/>
+                        <input type = 'text' name = 'userName' id = 'userName' className= 'form-control' /><br/>
                     </div>
-                    <div class="form-group row ml-5 mr-5">
+                    <div className="form-group row ml-5 mr-5">
                         <label>{<Translate string={"Contraseña"}/>} : </label>
-                        <input type = 'password' name = 'password' id = 'password' class = 'form-control'/><br/>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1" />
-                            <label class="custom-control-label" for="customCheck1">{<Translate string={"Mostrar_contraseña"}/>}</label>
+                        <input type = 'password' name = 'password' id = 'password' className= 'form-control'/><br/>
+                        <div className="custom-control custom-checkbox">
+                            <input type="checkbox" className="custom-control-input" id="customCheck1" />
+                            <label className="custom-control-label" for="customCheck1">{<Translate string={"Mostrar_contraseña"}/>}</label>
                         </div>
                     </div>
-                    <div class="btn-group col text-center center-div mx-auto">
-                        <button class="btn btn-info mb-3" type='submit'>
+                    <div className="btn-group col text-center center-div mx-auto">
+                        <button className="btn btn-info mb-3" type='submit'>
                             <Link to ="/">
                             <ExitToAppIcon/>
                             </Link>

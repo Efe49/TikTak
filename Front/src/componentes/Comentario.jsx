@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react'       
 
 const Comentario = (props) => (
     
-    <li key={props.id} class="list-group-item mx-auto justy-content comentariosTitle">
+    <li key={props.key} className="list-group-item mx-auto justy-content comentariosTitle">
         
         <p>
             {props.contenido}

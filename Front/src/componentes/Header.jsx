@@ -34,7 +34,7 @@ export default class Header extends Component{
             
             
             
-                        <button class="btn border-dark rounded-circle ml-5">
+                        <button className="btn border-dark rounded-circle ml-5">
                     <Link to="/">
                         <Explore/>
                     </Link>
@@ -42,9 +42,9 @@ export default class Header extends Component{
             </div>
             
             <Link to="/">
-                        <img class="logoTik mx-auto" src={logoTik} alt="TikTak"/>
+                        <img className="logoTik mx-auto" src={logoTik} alt="TikTak"/>
             </Link>
-                    <span class="nav-tool-items mr-2 text-right" >
+                    <span className="nav-tool-items mr-2 text-right" >
 
                     <Link to="/Registro">
                         <PersonAdd/>
@@ -68,13 +68,13 @@ export default class Header extends Component{
                     <Dropdown.Menu>
                         <Dropdown.Item >
                                     <button id="en" onClick={this.props.changeLanguage}>  
-                                        <img name ="en" src={English} class="img-fluid mx-auto " width="30" alt="Responsive image"/>
+                                        <img name ="en" src={English} className="img-fluid mx-auto " width="30" alt="Responsive image"/>
                             </button>
                         </Dropdown.Item>
 
                         <Dropdown.Item>
                                     <button id = "es" onClick={this.props.changeLanguage}> 
-                                        <img name ="es" src={Spanish} class="img-fluid mx-auto " width="30" alt="Responsive image"/>
+                                        <img name ="es" src={Spanish} className="img-fluid mx-auto " width="30" alt="Responsive image"/>
                             </button>
                         </Dropdown.Item>
                     </Dropdown.Menu>

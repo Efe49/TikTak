@@ -128,49 +128,48 @@ export default class Publicacion extends Component {
     }
     render(){
         return(
-            <li key ={this.props.id} class="post-box card">
-                <div class="align-self-center mx-auto">
+            <li key ={this.props.key} className="post-box card">
+                <div className="align-self-center mx-auto">
 
-                    <video class="post embed-responsive"  loop autoPlay muted  controls>
+                    <video className="post embed-responsive"  loop autoPlay muted  controls>
                         <source src={this.props.contenido} type="video/mp4"/>
                     </video>
                     
-                    <div class="card-body">
-                        <ul class="nav justify-content-between">
+                    <div className="card-body">
+                        <ul className="nav justify-content-between">
                             <li>
-                                <div class ="col mx-auto">
-                                    <a class="dislike mr-3"href="/" onClick={this.handleOnDisLike} >
+                                <div className="col mx-auto">
+                                    <a className="dislike mr-3"href="/" onClick={this.handleOnDisLike} >
                                     <ThumbDownAlt/> {this.state.noMeGusta}
                                     </a>
-                                    <a class="like ml-4 mr-5 "href="/" onClick={this.handleOnLike}>
+                                    <a className="like ml-4 mr-5 "href="/" onClick={this.handleOnLike}>
                                         <ThumbUpAlt/>{this.state.meGusta}
                                     </a>
                                 </div>
                             </li>
                             <li>
-                                <a href="https://github.com/" class="comment mx-auto">
+                                <a href="https://github.com/" className="comment mx-auto">
                                     <CommentOutlined/>
                                 </a>
                             </li>
                             <li> 
-                                <a class ="share mx-auto" href="https://github.com/">
+                                <a className="share mx-auto" href="https://github.com/">
                                     <Share/>
                                 </a>
                             </li>
                         </ul>
             
-                        <a class="user mt-3 mb-2" href="https://github.com/">
-                            <h2 class="card-author">{this.props.creador}</h2>
+                        <a className="user mt-3 mb-2" href="https://github.com/">
+                            <h2 className="card-author">{this.props.creador}</h2>
                         </a>       
-                        <a class="title text-center" href="https://github.com/"> 
-                            <h3 class="card-title">{this.props.titulo}</h3>
+                        <a className="title text-center" href="https://github.com/"> 
+                            <h3 className="card-title">{this.props.titulo}</h3>
                         </a>
-                        <p class="card-text">{this.props.descripcion}</p>
+                        <p className="card-text">{this.props.descripcion}</p>
 
                         COMENTARIOS DESTACADOS
                    
                         <ComentariosList
-                            publicacionID =  {this.props.id}
                             comentarios_data = {this.state.comentarios_data}    
                         />                            
                     </div>

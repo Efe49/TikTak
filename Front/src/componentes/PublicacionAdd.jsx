@@ -59,30 +59,30 @@ var urlencoded = new URLSearchParams()
 		return(
 
 
-    <div class="container login-box">
-		<div class="center_div px-auto border mt-5 mb-5">
-			<h1 class="text-center mt-4 mb-3">{<Translate string={"Nueva_publicacion"}/>}</h1><br/>	
-			<div class="mx-auto px-auto">
-				<form class="form" name = 'Form' action='../Controllers/Publicacion_Controller.php' method='post'> 
-					<div class="form-group row px-auto ml-5 mr-5">
+    <div className="container login-box">
+		<div className="center_div px-auto border mt-5 mb-5">
+			<h1 className="text-center mt-4 mb-3">{<Translate string={"Nueva_publicacion"}/>}</h1><br/>	
+			<div className="mx-auto px-auto">
+				<form className="form" name = 'Form' action='../Controllers/Publicacion_Controller.php' method='post'> 
+					<div className="form-group row px-auto ml-5 mr-5">
 						<label>{<Translate string={"Titulo"}/>}</label>
-						<input type = 'text' name = 'titulo' id = 'titulo' class = 'form-control' /*onblur="comprobarAlfanum(this,25)"*//><br/>
+						<input type = 'text' name = 'titulo' id = 'titulo' className= 'form-control' /*onblur="comprobarAlfanum(this,25)"*//><br/>
 					</div>
-					<div class="form-group row ml-5 mr-5">
+					<div className="form-group row ml-5 mr-5">
 						<label>{<Translate string={"Descripcion"}/>}</label>
-						<textarea class='form-control' name = 'descripcion' id = 'descripcion'   /*onblur="return comprobarAlfanum(this,240)"*/></textarea><br/>
+						<textarea className='form-control' name = 'descripcion' id = 'descripcion'   /*onblur="return comprobarAlfanum(this,240)"*/></textarea><br/>
 					</div>
-					<div class="input-group mx-auto">
-						<div class="input-group-prepend">
-							<span class="input-group-text">{<Translate string={"Seleccionar_multimedia"}/>}</span>
+					<div className="input-group mx-auto">
+						<div className="input-group-prepend">
+							<span className="input-group-text">{<Translate string={"Seleccionar_multimedia"}/>}</span>
 						</div>
-						<div class="custom-file">
-							<input type="file" name="multimedia" class="custom-file-input" id="inputGroupFile01"/>
-							<label class="custom-file-label" for="inputGroupFile01">{<Translate string={"Seleccionar_archivo"}/>}</label>
+						<div className="custom-file">
+							<input type="file" name="multimedia" className="custom-file-input" id="inputGroupFile01"/>
+							<label className="custom-file-label" for="inputGroupFile01">{<Translate string={"Seleccionar_archivo"}/>}</label>
 						</div>
 					</div>
-					<div class="btn-group col text-center center-div mt-3 mb-1">
-						<button class="btn btn-info mb-3" type='submit' name='action' value='addPublicacion'>
+					<div className="btn-group col text-center center-div mt-3 mb-1">
+						<button className="btn btn-info mb-3" type='submit' name='action' value='addPublicacion'>
 							<AddAPhoto/>    
 						</button>
 					</div>

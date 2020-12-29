@@ -12,20 +12,20 @@ export default class Usuario extends Component {
     render(){
         return(
             <div>
-                <div class="row mx-auto">
-                    <div class="card mx-auto border-dark">
-                        <img class="card-img-top fotoPerfilUsuario" src="USUARIOFOTO" alt="ProfilePic"/>
-                        <div class="card-body">
- <h5 class="card-title">{<Translate string={"Usuario"}/>} </h5>
-                            <p class="card-text"><small class="text-muted">{<Translate string={"Usuario_nombre"}/>}</small></p>
-                            <p class="card-text"><small class="text-muted">{<Translate string={"username"}/>}</small></p>
-                            <p class="card-text"><small class="text-muted">{<Translate string={"Fecha_de_nacimiento"}/>}</small></p>  
-                            <p class="card-text"><small class="text-muted">{<Translate string={"Seguidores"}/>}</small></p>  
-                            <p class="card-text"><small class="text-muted">{<Translate string={"Seguidos"}/>}</small></p>  
+                <div className="row mx-auto">
+                    <div className="card mx-auto border-dark">
+                        <img className="card-img-top fotoPerfilUsuario" src="USUARIOFOTO" alt="ProfilePic"/>
+                        <div className="card-body">
+ <h5 className="card-title">{<Translate string={"Usuario"}/>} </h5>
+                            <p className="card-text"><small className="text-muted">{<Translate string={"Usuario_nombre"}/>}</small></p>
+                            <p className="card-text"><small className="text-muted">{<Translate string={"username"}/>}</small></p>
+                            <p className="card-text"><small className="text-muted">{<Translate string={"Fecha_de_nacimiento"}/>}</small></p>  
+                            <p className="card-text"><small className="text-muted">{<Translate string={"Seguidores"}/>}</small></p>  
+                            <p className="card-text"><small className="text-muted">{<Translate string={"Seguidos"}/>}</small></p>  
                         </div>
                     </div>     
                 </div>
-                <h1 class="mt-5 text-center">{<Translate string={"Publicaciones"}/>}</h1>
+                <h1 className="mt-5 text-center">{<Translate string={"Publicaciones"}/>}</h1>
                 <PublicacionesList/>
             </div>
         )
