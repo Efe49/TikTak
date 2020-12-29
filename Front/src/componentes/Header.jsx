@@ -9,8 +9,6 @@ import GTranslateOutlinedIcon from '@material-ui/icons/GTranslateOutlined';
 import {Link} from 'react-router-dom'
 import Translate from './Translate'
 
-//traduccion
-import { IntlProvider, FormattedMessage} from 'react-intl'
 
 export default class Header extends Component{ 
      constructor(props){
@@ -68,13 +66,13 @@ export default class Header extends Component{
                     <Dropdown.Menu>
                         <Dropdown.Item >
                                     <button id="en" onClick={this.props.changeLanguage}>  
-                                        <img name ="en" src={English} className="img-fluid mx-auto " width="30" alt="Responsive image"/>
+                                        <img name ="en" src={English} className="img-fluid mx-auto " width="30" alt="English"/>
                             </button>
                         </Dropdown.Item>
 
                         <Dropdown.Item>
                                     <button id = "es" onClick={this.props.changeLanguage}> 
-                                        <img name ="es" src={Spanish} className="img-fluid mx-auto " width="30" alt="Responsive image"/>
+                                        <img name ="es" src={Spanish} className="img-fluid mx-auto " width="30" alt="Spanish"/>
                             </button>
                         </Dropdown.Item>
                     </Dropdown.Menu>

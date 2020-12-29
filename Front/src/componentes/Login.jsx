@@ -3,8 +3,8 @@ import React, {
 } from 'react'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import {Link} from 'react-router-dom'
-import App from '.'
 import Translate from './Translate'
+
 
 export default class Login extends Component {
     constructor(...props) {

@@ -14,7 +14,6 @@ import IdiomaContext from '../Context/IdiomaContext'
 
 import './componentes.css'
 //import publicaciones_data from '../Files/publicaciones.json'
-
 import {
     BrowserRouter as Router,
     Switch,
@@ -31,40 +30,40 @@ class App extends Component {
         this.state = {
             publicaciones_data: [],
             seguidos: [],
-            userLogged : [],
+            userLogged: [],
             redirect: null,
-            preferredLocale:"es"
+            preferredLocale: "es"
 
         }
-     
+
         this.handleOnAddUsuario = this.handleOnAddUsuario.bind(this)
         this.handleOnLoginUsuario = this.handleOnLoginUsuario.bind(this)
-          this.changeLanguage = this.changeLanguage.bind(this)
+        this.changeLanguage = this.changeLanguage.bind(this)
 
     }
     componentDidMount() {
-        
-            const requestOptions = {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': localStorage.getItem('token')
-                },
-            };
-            fetch('http://localhost:3001/api/usuario', requestOptions)
-                .then((response) => {
-                    return response.json()
+
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': localStorage.getItem('token')
+            },
+        };
+        fetch('http://localhost:3001/api/usuario', requestOptions)
+            .then((response) => {
+                return response.json()
+            })
+            .then((userLogged1) => {
+
+                this.setState({
+                    userLogged: userLogged1
                 })
-                .then((userLogged1) => {
-                   
-                        this.setState({
-                            userLogged : userLogged1
-                        })
-                    
-                })
-               
-    
-    
+
+            })
+
+
+
         fetch('http://localhost:3001/api/publicaciones')
             .then((response) => {
                 return response.json()
@@ -118,7 +117,7 @@ class App extends Component {
                     userLogged: userLogged
                 })
             })
-    
+
     }
     async handleOnAddUsuario(e) {
         e.persist();
@@ -134,13 +133,13 @@ class App extends Component {
 
             }
         var urlencoded = new URLSearchParams()
-        urlencoded.append("profilePic", usuario.profilePic )
-        urlencoded.append("password", usuario.password )
-        urlencoded.append("userName", usuario.userName )
-        urlencoded.append("name", usuario.name )
-        urlencoded.append("email", usuario.email )
-        urlencoded.append("seguidores", usuario.seguidores )
-        urlencoded.append("seguidos", usuario.seguidos )
+        urlencoded.append("profilePic", usuario.profilePic)
+        urlencoded.append("password", usuario.password)
+        urlencoded.append("userName", usuario.userName)
+        urlencoded.append("name", usuario.name)
+        urlencoded.append("email", usuario.email)
+        urlencoded.append("seguidores", usuario.seguidores)
+        urlencoded.append("seguidos", usuario.seguidos)
 
         const requestOptions = {
             method: 'Post',
@@ -189,10 +188,10 @@ class App extends Component {
     }
 
     handleOnLoginUsuario(e) {
-       e.persist()
+        e.persist()
         var urlencoded = new URLSearchParams()
         urlencoded.append("userName", e.target.userName)
-        urlencoded.append("password", e.target.password )
+        urlencoded.append("password", e.target.password)
 
 
         const requestOptions = {
@@ -260,36 +259,52 @@ class App extends Component {
             usuarios: this.state.usuarios.concat([usuario])
         })
     }
-     changeLanguage = ({ currentTarget: {id}}) => {
-        this.setState ({
+    changeLanguage = ({
+        currentTarget: {
+            id
+        }
+    }) => {
+        this.setState({
             preferredLocale: id,
         });
     }
-    render(){
-        if (this.state.redirect) {
-            return <Redirect to={this.state.redirect} />
-          }
-        return (
-            <div>
-                <IdiomaContext.Provider value={this.state.preferredLocale}>
+    render() {
+            if (this.state.redirect) {
+                return <Redirect to = {
+                    this.state.redirect
+                }
+                />
+            }
+            return (
+        <div>
+            <IdiomaContext.Provider value={this.state.preferredLocale}>
 
                 <Router>
-                                          <Header changeLanguage={this.changeLanguage} />
+                    <Header changeLanguage={this.changeLanguage} />
 
-                        <Switch>
-<Route exact path="/" render={(props) => <Home {...props} publicaciones_data={this.state.publicaciones_data} changeLanguage={this.changeLanguage}/>}  />
-                                <Route exact path="/Registro" render={(props) => <Registro {...props} onAddUsuario = {this.handleOnUserLogged()} changeLanguage={this.changeLanguage}/>} />
-                                <Route exact path="/Login" render={(props) => <Login {...props} onLoginUsuario = {this.handleOnUserLogged()} changeLanguage={this.changeLanguage}/>} />
-                                <Route exact path="/Usuario" render={(props) => <Usuario {...props} changeLanguage={this.changeLanguage}/>}/>
-                                <Route exact path="/PublicacionAdd" render={(props) => <PublicacionAdd {...props} changeLanguage={this.changeLanguage}/>}/>
-                            <Route render={() => <h1>Not found!</h1>} />
+                    <Switch>
+                        <Route exact path="/" render={(props)=>
+                            <Home {...props} publicaciones_data={this.state.publicaciones_data}
+                                changeLanguage={this.changeLanguage} />} />
+                            <Route exact path="/Registro" render={(props)=>
+                                <Registro {...props} onAddUsuario={this.handleOnUserLogged()}
+                                    changeLanguage={this.changeLanguage} />} />
+                                <Route exact path="/Login" render={(props)=>
+                                    <Login {...props} onLoginUsuario={this.handleOnUserLogged()}
+                                        changeLanguage={this.changeLanguage} />} />
+                                    <Route exact path="/Usuario" render={(props)=>
+                                        <Usuario {...props} changeLanguage={this.changeLanguage} />}/>
+                                        <Route exact path="/PublicacionAdd" render={(props)=>
+                                            <PublicacionAdd {...props} changeLanguage={this.changeLanguage} />}/>
+                                            <Route render={()=>
+                                                <h1>Not found!</h1>} />
 
-                        </Switch>
-                        <Footer changeLanguage={this.changeLanguage}/>    
+                    </Switch>
+                    <Footer changeLanguage={this.changeLanguage} />
                 </Router>
-                </IdiomaContext.Provider>
+            </IdiomaContext.Provider>
 
-            </div>
+        </div>
         )
     }
 }
