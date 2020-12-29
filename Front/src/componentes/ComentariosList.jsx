@@ -8,7 +8,7 @@ const ComentariosList = (props) => (
                 {props.comentarios_data.map(
                     (comentario,i) => (
                         <Comentario
-                        key = {i}
+                        keyC = {i}
                         id = {comentario.id}
                         contenido = {comentario.contenido}
                         publicacion = {comentario.publicacion}

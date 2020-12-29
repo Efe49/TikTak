@@ -38,10 +38,10 @@ export const loadHomePageNotLogged = async () => {
 }
 
 //Obtiene una lista de los seguidos que tiene el usuario loggeado
-export const loadSeguidos = async ({ idUsuario }) => {
+export const loadSeguidos = async ({ nombreUsuario }) => {
   try {
 
-    const seguidos = await fetch('http://localhost:3001/api/seguidores/' + idUsuario)
+    const seguidos = await fetch('http://localhost:3001/api/seguidores/' + nombreUsuario)
     return seguidos.json()
 
   } catch (error) {
@@ -52,15 +52,15 @@ export const loadSeguidos = async ({ idUsuario }) => {
 }
 
 //Obtiene la homePage para alguien loggeado y que tenga seguidos
-export const loadHomePageLogged = async ({ seguidos, publicaciones }) => {
+export const loadHomePageLogged = ({ seguidos, publicaciones }) => {
 
   let publicacionesSeguidos = []
 
-  seguidos.map(seguido => {
+  seguidos.map(seg => {
 
     publicaciones.map(publicacion => {
 
-      if (seguido.seguido === publicacion.creador) {
+      if (seg.seguido === publicacion.creador) {
         publicacionesSeguidos.push(publicacion);
       }
 

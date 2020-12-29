@@ -128,7 +128,7 @@ export default class Publicacion extends Component {
     }
     render(){
         return(
-            <li key ={this.props.key} className="post-box card">
+            <li key ={this.props.keyP} className="post-box card ">
                 <div className="align-self-center mx-auto">
 
                     <video className="post embed-responsive"  loop autoPlay muted  controls>

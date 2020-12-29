@@ -2,7 +2,13 @@ import React, {
     Component
 } from 'react'
 import PropTypes from 'prop-types'
+import { loadHomePageNotLogged, 
+    getUserLogged,
+    loadSeguidos,
+    loadHomePageLogged
 
+} from '../Services/Api'
+import Loading from './loading'
 import Home from './Home'
 import Login from './Login'
 import Registro from './Registro'
@@ -11,7 +17,7 @@ import PublicacionAdd from './PublicacionAdd'
 import Header from './Header'
 import Footer from './Footer'
 import IdiomaContext from '../Context/IdiomaContext'
-
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import './componentes.css'
 //import publicaciones_data from '../Files/publicaciones.json'
 import {
@@ -28,9 +34,10 @@ class App extends Component {
         super(...props)
 
         this.state = {
-            publicaciones_data: [],
-            seguidos: [],
-            userLogged: [],
+            isLoading : true,
+            publicaciones_data: null,
+            seguidos: null,
+            userLogged: null,
             redirect: null,
             preferredLocale: "es"
 
@@ -41,63 +48,68 @@ class App extends Component {
         this.changeLanguage = this.changeLanguage.bind(this)
 
     }
-    componentDidMount() {
+    async componentDidMount() {
+        this.setState({
+            isLoading : true
+        })
+        let Allpublicaciones = []
+        
+        //Obtenemos una lista de todas las publicaciones
+        try {
 
-        const requestOptions = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': localStorage.getItem('token')
-            },
-        };
-        fetch('http://localhost:3001/api/usuario', requestOptions)
-            .then((response) => {
-                return response.json()
-            })
-            .then((userLogged1) => {
+            const allPosts = await loadHomePageNotLogged()
+            Allpublicaciones = allPosts;
 
-                this.setState({
-                    userLogged: userLogged1
-                })
+        } catch (error) {
+            
+            throw error
 
-            })
-
-
-
-        fetch('http://localhost:3001/api/publicaciones')
-            .then((response) => {
-                return response.json()
-            })
-            .then((publicaciones_data) => {
-                this.setState({
-                    publicaciones_data: publicaciones_data
-                })
-            })
-        if (this.state.userLogged !== []) {
-            fetch('http://localhost:3001/api/seguidores/' + this.state.userLogged.userName)
-                .then((response) => {
-                    return response.json()
-                })
-                .then((seguidos) => {
-                    if (seguidos !== []) {
-
-                        let publicacionesSeguidos = [];
-                        let seguidosMapped = seguidos.map(seguido => {
-                            let publicacionesMapped = this.state.publicaciones_data.map(publicacion => {
-                                if (seguido.seguido === publicacion.creador) {
-                                    publicacionesSeguidos.push(publicacion)
-                                }
-                                return 1
-                            })
-                            return 1
-                        })
-                        this.setState({
-                            publicaciones_data: publicacionesSeguidos
-                        })
-
-                    }
-                })
         }
+
+       if(localStorage.getItem("token")){
+        //Si existe un token guardado hay un usuario loggeado
+        try {
+        //obtenemos los datos del usuario
+            const usuarioLogged = await getUserLogged()
+            this.setState({
+                userLogged : usuarioLogged 
+            })
+        //obtenemos los seguidos del usuario
+            const nombreUsuario = this.state.userLogged.userName
+            const followed = await loadSeguidos({nombreUsuario})
+            this.setState({
+                seguidos : followed
+            })
+        //Obtenemos las publicaciones de los seguidos
+        if(this.state.seguidos.length !== 0){
+            const seguidos = this.state.seguidos
+            const publicaciones = Allpublicaciones
+            const postFollowed  =  loadHomePageLogged({seguidos , publicaciones})
+            
+            this.setState({
+                publicaciones_data : postFollowed,
+                isLoading: false
+            })
+
+        }else{
+            this.setState({
+                publicaciones_data : Allpublicaciones,
+                isLoading : false
+            })
+        }
+
+        } catch (error) {
+            throw error
+        }
+          
+       } else{
+
+            this.setState({
+                publicaciones_data : Allpublicaciones,
+                isLoading : false
+            })
+       }
+       
 
     }
     async handleOnUserLogged() {
@@ -269,12 +281,15 @@ class App extends Component {
         });
     }
     render() {
-            if (this.state.redirect) {
-                return <Redirect to = {
-                    this.state.redirect
-                }
-                />
-            }
+            if (this.state.isLoading) {
+                return (
+                   <Loading
+                   message ="Cargando contenido..."
+                   />
+                )
+            }else{
+
+            
             return (
         <div>
             <IdiomaContext.Provider value={this.state.preferredLocale}>
@@ -305,17 +320,10 @@ class App extends Component {
             </IdiomaContext.Provider>
 
         </div>
-        )
+        )}
     }
 }
 
-/*function TransLate(){
-    const [locale, setLocale] = useState("es");
-
-        const handleSelect = e => {
-            setLocale(e.target.value);
-        };
-}*/
 
 App.propTypes = { 
     profilePic: PropTypes.string.isRequired,

@@ -26,7 +26,21 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     z-index: 5;
     max-width: 330px;
   }
-  
+.backgroundAPP{
+ 
+    min-height:1000px;
+    background-image: url("../Assets/background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position:fixed;
+}
+.backgroundLoading{
+    background-image : url("../Assets/logo.jpg");
+    background-position : center;
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-color : #31e89fb3 ;
+}
   .box.back {
     transform: scale(.95);
     -webkit-transform: scale(.95);
@@ -113,6 +127,7 @@ width:auto;}
     background-color: rgba(49, 232, 159,0.2);
 }
 .post-box{
+    margin-top: 8%;
   max-width: 45rem;
     border-width: 0.5rem;
     border-color: rgba(0, 0, 0, 0.4);

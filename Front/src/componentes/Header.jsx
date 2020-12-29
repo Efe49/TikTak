@@ -21,7 +21,7 @@ export default class Header extends Component{
 
         return (
     <header>
-        <nav className ="navbar headerTik justify-content-between mb-5">
+        <nav className ="navbar headerTik justify-content-between fixed-top mb-5">
 
             <div className="home-buttons">
                 <button className="btn border-dark rounded-circle ml-5">
@@ -53,9 +53,9 @@ export default class Header extends Component{
                     </Link> 
 
             
-                    <h5>
+                   
                         <h5><Translate string={"username"}/></h5>
-                    </h5>
+                  
             
 
                 <Dropdown>
