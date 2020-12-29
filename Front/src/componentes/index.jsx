@@ -5,7 +5,8 @@ import PropTypes from 'prop-types'
 import { loadHomePageNotLogged, 
     getUserLogged,
     loadSeguidos,
-    loadHomePageLogged
+    loadHomePageLogged,
+    loginUsuario
 
 } from '../Services/Api'
 import Loading from './loading'
@@ -37,6 +38,7 @@ class App extends Component {
             isLoading : true,
             publicaciones_data: null,
             seguidos: null,
+            userName: null,
             userLogged: null,
             redirect: null,
             preferredLocale: "es"
@@ -44,9 +46,8 @@ class App extends Component {
         }
 
         this.handleOnAddUsuario = this.handleOnAddUsuario.bind(this)
-        this.handleOnLoginUsuario = this.handleOnLoginUsuario.bind(this)
         this.changeLanguage = this.changeLanguage.bind(this)
-
+        this.handleOnLogOut = this.handleOnLogOut.bind(this)
     }
     async componentDidMount() {
         this.setState({
@@ -76,6 +77,9 @@ class App extends Component {
             })
         //obtenemos los seguidos del usuario
             const nombreUsuario = this.state.userLogged.userName
+            this.setState({
+                userName : nombreUsuario
+            })
             const followed = await loadSeguidos({nombreUsuario})
             this.setState({
                 seguidos : followed
@@ -112,23 +116,23 @@ class App extends Component {
        
 
     }
-    async handleOnUserLogged() {
-        const requestOptions = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': localStorage.getItem('token')
-            },
-        };
-        fetch('http://localhost:3001/api/usuario', requestOptions)
-            .then((response) => {
-                return response.json()
-            })
-            .then((userLogged) => {
-                this.setState({
-                    userLogged: userLogged
+    async handleOnUserLogin() {
+   
+     try {
+
+
+
+                if(this.state.userLogged){
+                  const usuarioLoggueado = await getUserLogged()
+                  this.setState({
+                  userLogged : usuarioLoggueado,
+                  isLoading : false
                 })
-            })
+            }
+                
+     } catch (error) {
+         throw error
+     }
 
     }
     async handleOnAddUsuario(e) {
@@ -199,58 +203,16 @@ class App extends Component {
         e.preventDefault()
     }
 
-    handleOnLoginUsuario(e) {
+    handleOnLogOut(e){
         e.persist()
-        var urlencoded = new URLSearchParams()
-        urlencoded.append("userName", e.target.userName)
-        urlencoded.append("password", e.target.password)
-
-
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-
-            },
-            body: urlencoded
-        };
-        fetch('http://localhost:3001/api/Usuario', requestOptions)
-            .then(async response => {
-                const data = await response.json();
-
-                // check for error response
-                if (!response.ok) {
-                    // get error message from body or default to response status
-                    const error = (data && data.message) || response.status;
-                    return Promise.reject(error);
-                }
-
-                localStorage.setItem('token', "Bearer " + data.token)
-                const requestOptions = {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': localStorage.getItem('token')
-                    },
-                };
-                fetch('http://localhost:3001/api/usuario', requestOptions)
-                    .then((response) => {
-                        return response.json()
-                    })
-                    .then((userLogged) => {
-                        this.setState({
-                            userLogged: userLogged
-                        })
-                    })
-
-            })
-            .catch(error => {
-
-                console.error('There was an error!', error);
-            });
-
+        this.setState({isLoading : true})
+        localStorage.removeItem("token")
+        this.setState({isLoading : false, userLogged : null  })
+        
         e.preventDefault()
-    }
+        }
+
+
     handleOnAddPublicacion(e) {
         e.persist();
         alert('Evento Realizandose')
@@ -284,7 +246,7 @@ class App extends Component {
             if (this.state.isLoading) {
                 return (
                    <Loading
-                   message ="Cargando contenido..."
+                   message ="Cargando contenido"
                    />
                 )
             }else{
@@ -295,7 +257,7 @@ class App extends Component {
             <IdiomaContext.Provider value={this.state.preferredLocale}>
 
                 <Router>
-                    <Header changeLanguage={this.changeLanguage} />
+                    <Header changeLanguage={this.changeLanguage} handleOnLogOut = {this.handleOnLogOut} userName = {this.state.userName}/>
 
                     <Switch>
                         <Route exact path="/" render={(props)=>
@@ -305,7 +267,7 @@ class App extends Component {
                                 <Registro {...props} onAddUsuario={this.handleOnUserLogged()}
                                     changeLanguage={this.changeLanguage} />} />
                                 <Route exact path="/Login" render={(props)=>
-                                    <Login {...props} onLoginUsuario={this.handleOnUserLogged()}
+                                    <Login {...props} onLoginUsuario={this.handleOnUserLogin()}
                                         changeLanguage={this.changeLanguage} />} />
                                     <Route exact path="/Usuario" render={(props)=>
                                         <Usuario {...props} changeLanguage={this.changeLanguage} />}/>

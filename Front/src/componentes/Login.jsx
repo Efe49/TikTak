@@ -4,6 +4,7 @@ import React, {
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import {Link} from 'react-router-dom'
 import Translate from './Translate'
+import {loginUsuario} from '../Services/Api'
 
 
 export default class Login extends Component {
@@ -16,43 +17,17 @@ export default class Login extends Component {
      this.handleOnChangeRoute = this.handleOnChangeRoute.bind(this)
 
     }
-handleOnChangeRoute(e){
+ handleOnChangeRoute(e){
 e.persist()
 let historial = this.props
-var urlencoded = new URLSearchParams()
-        urlencoded.append("userName", e.target.userName.value )
-        urlencoded.append("password", e.target.password.value )
-
-
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-
-            },
-            body: urlencoded
-        };
-        fetch('http://localhost:3001/api/Usuario', requestOptions)
-            .then(async response => {
-                const data = await response.json();
-
-                // check for error response
-                if (!response.ok) {
-                    // get error message from body or default to response status
-                    const error = (data && data.message) || response.status;
-                    return Promise.reject(error);
-                }
-
-                localStorage.setItem('token', "Bearer " + data.token)
-                historial.history.push("/")
-                this.props.onLoginUsuario()
-            })
-            .catch(error => {
-
-                console.error('There was an error!', error);
-            });
-
-            
+let form = e.target
+try {
+       loginUsuario({form})
+      historial.history.push("/") 
+} catch (error) {
+    throw error 
+}
+       
         e.preventDefault()
 
 }

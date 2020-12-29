@@ -121,8 +121,8 @@ export const addUsuario = async ({ form }) => {
 export const loginUsuario = async ({ form }) => {
 
   var urlencoded = new URLSearchParams()
-  urlencoded.append("userName", form.userName)
-  urlencoded.append("password", form.password)
+  urlencoded.append("userName", form.userName.value)
+  urlencoded.append("password", form.password.value)
 
   const requestOptions = {
     method: 'POST',
@@ -135,7 +135,10 @@ export const loginUsuario = async ({ form }) => {
 
   try {
     const loginResponse = await (await fetch('http://localhost:3001/api/Usuario', requestOptions)).json()
+
+
     localStorage.setItem('token', "Bearer " + loginResponse.token)
+
     return loginResponse
 
   } catch (error) {

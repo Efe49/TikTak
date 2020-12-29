@@ -21,11 +21,14 @@ render(){
       />
 
       </div>
-      <div className = "mx-auto ">
+      <div className = "mx-auto">
           <h2>{this.props.message}</h2>
 
       </div>
-        
+      <div className = "d-flex justify-content-center">
+          <Loader type="ThreeDots" color="#FFFFF" height={80} width={80} />
+
+      </div>
         </div>
      
     </div>
