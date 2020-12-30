@@ -3,7 +3,7 @@ import logoTik from '../Assets/logo.jpg'
 import English from '../Assets/English.png'
 import Spanish from '../Assets/Spanish.png'
 import { Dropdown} from 'react-bootstrap'
-import { AddAPhoto, Explore, PersonAdd, Input, ExitToApp } from '@material-ui/icons'
+import { AddAPhoto, Explore} from '@material-ui/icons'
 import GTranslateOutlinedIcon from '@material-ui/icons/GTranslateOutlined';
 import LogOut from './Dialogos/DialogoLogOut'
 import Register from './Dialogos/DialogoRegister'
