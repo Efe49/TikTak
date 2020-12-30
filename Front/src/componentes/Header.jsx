@@ -96,14 +96,10 @@ componentDidMount(){
                                 <img className="logoTik mx-auto" src={logoTik} alt="TikTak"/>
                     </Link>
                             <span className="nav-tool-items mr-2 text-right" >       
-        
-                            
+                       
                                 <LogOut handleOnLogOut = {this.props.handleOnLogOut}/>
-                        
-        
-                    
-                        
-                            <Link to="/myProfile">
+              
+                               <Link to="/myProfile">
                                 <h5>{this.state.userName}</h5>                          
                             </Link> 
                         
