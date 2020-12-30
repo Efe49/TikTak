@@ -118,11 +118,11 @@ export const addUsuario = async ({ form }) => {
 }
 
 //Loggea a un usuario dentro de la aplicacion
-export const loginUsuario = async ({ form }) => {
+export const loginUsuario = async ({ usuario, password }) => {
 
   var urlencoded = new URLSearchParams()
-  urlencoded.append("userName", form.userName.value)
-  urlencoded.append("password", form.password.value)
+  urlencoded.append("userName", usuario)
+  urlencoded.append("password", password)
 
   const requestOptions = {
     method: 'POST',

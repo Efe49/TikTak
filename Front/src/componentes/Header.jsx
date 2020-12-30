@@ -5,9 +5,12 @@ import Spanish from '../Assets/Spanish.png'
 import { Dropdown} from 'react-bootstrap'
 import { AddAPhoto, Explore, PersonAdd, Input, ExitToApp } from '@material-ui/icons'
 import GTranslateOutlinedIcon from '@material-ui/icons/GTranslateOutlined';
-import AlertDialog from './Dialogo'
+import LogOut from './Dialogos/DialogoLogOut'
+import Register from './Dialogos/DialogoRegister'
+import LogIn from './Dialogos/DialogoLogIn'
 import {Link} from 'react-router-dom'
 import Translate from './Translate'
+import { loginUsuario } from '../Services/Api'
 
 
 export default class Header extends Component{ 
@@ -17,10 +20,38 @@ export default class Header extends Component{
         
         this.state = {
             userName : "username",
+            password :  "",
             isLoading: false
         }
+        this.handleOnChangeU = this.handleOnChangeU.bind(this)
+        this.handleOnChangeP = this.handleOnChangeP.bind(this)
+        this.handleOnLogIn = this.handleOnLogIn.bind(this)
     }
-    
+    handleOnChangeU(e){
+        e.persist()
+        this.setState({
+            userName : e.target.value
+        })
+        e.preventDefault()
+    }
+
+    async handleOnLogIn(){
+       const usuario = this.state.userName
+       const password = this.state.password
+        try {
+            await loginUsuario({usuario,password})
+        } catch (error) {
+            throw error
+        }
+        window.location.reload()
+    }
+    handleOnChangeP(e){
+        e.persist()
+        this.setState({
+            password : e.target.value
+        })
+        e.preventDefault()
+    }
 componentDidMount(){
     
     if(this.props.userName){
@@ -66,9 +97,9 @@ componentDidMount(){
                     </Link>
                             <span className="nav-tool-items mr-2 text-right" >       
         
-                            <Link  to="/" onClick={this.props.handleOnLogOut}>
-                                <ExitToApp/>
-                            </Link> 
+                            
+                                <LogOut handleOnLogOut = {this.props.handleOnLogOut}/>
+                        
         
                     
                         
@@ -129,13 +160,19 @@ componentDidMount(){
             </Link>
                     <span className="nav-tool-items mr-2 text-right" >
 
-                    <Link to="/Registro">
-                        <PersonAdd/>
-                    </Link>
+                   <Register
+            /*        changeName
+                   changeUserN
+                   changeEmail
+                   changePassword
+                   changePP */
+                   />
 
-                    <Link to="/Login">
-                        <Input/>
-                    </Link> 
+                   <LogIn
+                   handleOnLogIn = {this.handleOnLogIn}
+                   changeP = {this.handleOnChangeP}
+                   changeU = {this.handleOnChangeU}
+                   />
 
             
                    

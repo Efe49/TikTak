@@ -116,11 +116,11 @@ class App extends Component {
        
 
     }
-    async handleOnUserLogin() {
-   
+    async handleOnUserLogin({userName,password}) {
+            console.log({userName, password})
      try {
 
-
+                await loginUsuario()
 
                 if(this.state.userLogged){
                   const usuarioLoggueado = await getUserLogged()
@@ -208,7 +208,7 @@ class App extends Component {
         this.setState({isLoading : true})
         localStorage.removeItem("token")
         this.setState({isLoading : false, userLogged : null  })
-        
+        window.location.reload()
         e.preventDefault()
         }
 
@@ -257,7 +257,12 @@ class App extends Component {
             <IdiomaContext.Provider value={this.state.preferredLocale}>
 
                 <Router>
-                    <Header changeLanguage={this.changeLanguage} handleOnLogOut = {this.handleOnLogOut} userName = {this.state.userName}/>
+                    <Header 
+                    changeLanguage={this.changeLanguage} 
+                    handleOnLogOut = {this.handleOnLogOut}
+                    handleOnLogIn = {this.handleOnUserLogin} 
+                    userName = {this.state.userName}
+                    />
 
                     <Switch>
                         <Route exact path="/" render={(props)=>
