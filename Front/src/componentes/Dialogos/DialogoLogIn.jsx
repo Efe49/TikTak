@@ -25,7 +25,7 @@ export default function FormDialog(props) {
   
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button className="mb-2" variant="outlined" color="primary" onClick={handleClickOpen}>
         LogIn <Input/>
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">

@@ -40,12 +40,12 @@ class App extends Component {
             seguidos: null,
             userName: null,
             userLogged: null,
+            userPic: null,
             redirect: null,
             preferredLocale: "es"
 
         }
 
-        this.handleOnAddUsuario = this.handleOnAddUsuario.bind(this)
         this.changeLanguage = this.changeLanguage.bind(this)
         this.handleOnLogOut = this.handleOnLogOut.bind(this)
     }
@@ -79,6 +79,10 @@ class App extends Component {
             const nombreUsuario = this.state.userLogged.userName
             this.setState({
                 userName : nombreUsuario
+            })
+            const userPic = this.state.userLogged.profilePic
+            this.setState({
+                userPic : userPic
             })
             const followed = await loadSeguidos({nombreUsuario})
             this.setState({
@@ -135,73 +139,7 @@ class App extends Component {
      }
 
     }
-    async handleOnAddUsuario(e) {
-        e.persist();
-        let form = e.target,
-            usuario = {
-                profilePic: form.profilePic.value ? form.profilePic.value : App.defaultProps.profilePic,
-                password: form.password.value,
-                userName: form.userName.value,
-                name: form.name.value,
-                email: form.email.value,
-                seguidores: App.defaultProps.seguidores,
-                seguidos: App.defaultProps.seguidos
 
-            }
-        var urlencoded = new URLSearchParams()
-        urlencoded.append("profilePic", usuario.profilePic)
-        urlencoded.append("password", usuario.password)
-        urlencoded.append("userName", usuario.userName)
-        urlencoded.append("name", usuario.name)
-        urlencoded.append("email", usuario.email)
-        urlencoded.append("seguidores", usuario.seguidores)
-        urlencoded.append("seguidos", usuario.seguidos)
-
-        const requestOptions = {
-            method: 'Post',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-
-            },
-            body: urlencoded
-        };
-        fetch('http://localhost:3001/api/Usuarios', requestOptions)
-            .then(async response => {
-                const data = await response.json();
-
-                // check for error response
-                if (!response.ok) {
-                    // get error message from body or default to response status
-                    const error = (data && data.message) || response.status;
-                    return Promise.reject(error);
-                }
-
-                localStorage.setItem('token', "Bearer " + data.token)
-                const requestOptions = {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': localStorage.getItem('token')
-                    },
-                };
-                fetch('http://localhost:3001/api/usuario', requestOptions)
-                    .then((response) => {
-                        return response.json()
-                    })
-                    .then((userLogged) => {
-                        this.setState({
-                            userLogged: userLogged
-                        })
-                    })
-
-            })
-            .catch(error => {
-
-                console.error('There was an error!', error);
-            });
-
-        e.preventDefault()
-    }
 
     handleOnLogOut(e){
         e.persist()
@@ -260,7 +198,8 @@ class App extends Component {
                     <Header 
                     changeLanguage={this.changeLanguage} 
                     handleOnLogOut = {this.handleOnLogOut}
-                    handleOnLogIn = {this.handleOnUserLogin} 
+                    handleOnLogIn = {this.handleOnUserLogin}
+                    profilePic = {this.state.userPic} 
                     userName = {this.state.userName}
                     />
 

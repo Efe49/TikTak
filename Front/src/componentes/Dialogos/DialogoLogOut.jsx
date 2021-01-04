@@ -23,7 +23,7 @@ export default function AlertDialog(props) {
 
   return (
     <div>
-      <Button variant="outlined" color="secondary" onClick={handleClickOpen}>
+      <Button className="mb-2" variant="outlined" color="secondary" onClick={handleClickOpen}>
         LogOut <ExitToApp/>
       </Button>
       <Dialog

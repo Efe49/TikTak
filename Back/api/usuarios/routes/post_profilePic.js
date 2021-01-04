@@ -28,7 +28,7 @@ router.route('/')
               if (req.file == undefined) {
                 res.status(400).send({ message: "Please upload a file!" });
               }
-              Usuario.findOneAndUpdate({ _id }, { profilePic: { path } + req.file.originalname }, { new: true }, (er, usuari) => {
+              Usuario.findOneAndUpdate({ _id }, { profilePic: `${path}${req.file.originalname}` }, { new: true }, (er, usuari) => {
                 if (err) {
                   res.status(404).json(er);
                 } else {

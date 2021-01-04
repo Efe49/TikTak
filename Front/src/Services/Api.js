@@ -71,29 +71,17 @@ export const loadHomePageLogged = ({ seguidos, publicaciones }) => {
 
 }
 
-//Registra un nuevo usuario en la base de datos
-export const addUsuario = async ({ form }) => {
-
-  let usuario = {
-
-    profilePic: form.profilePic.value,
-    password: form.password.value,
-    userName: form.userName.value,
-    name: form.name.value,
-    email: form.email.value,
-    seguidores: form.seguidores.value,
-    seguidos: form.seguidos.value
-
-  }
+//Registra un nuevo usuario con foto de perfil en la base de datos
+export const RegisterUsuarioPP = async ({ usuario, password, email, name, profilePic }) => {
 
   var urlencoded = new URLSearchParams()
-  urlencoded.append("profilePic", usuario.profilePic)
-  urlencoded.append("password", usuario.password)
-  urlencoded.append("userName", usuario.userName)
-  urlencoded.append("name", usuario.name)
-  urlencoded.append("email", usuario.email)
-  urlencoded.append("seguidores", usuario.seguidores)
-  urlencoded.append("seguidos", usuario.seguidos)
+  urlencoded.append("profilePic", "http://localhost:3001/public/uploads/user.png")
+  urlencoded.append("password", password)
+  urlencoded.append("userName", usuario)
+  urlencoded.append("name", name)
+  urlencoded.append("email", email)
+  urlencoded.append("seguidores", 0)
+  urlencoded.append("seguidos", 0)
 
   const requestOptions = {
     method: 'Post',
@@ -103,7 +91,53 @@ export const addUsuario = async ({ form }) => {
     },
     body: urlencoded
   };
+  try {
 
+    const addResponse = await (await fetch('http://localhost:3001/api/Usuarios', requestOptions)).json()
+    localStorage.setItem('token', "Bearer " + addResponse.token)
+    var urlencodedPic = new FormData()
+    urlencodedPic.append("file", profilePic)
+
+
+    const requestOptionsPic = {
+      method: 'Post',
+      headers: {
+        'Authorization': localStorage.getItem('token')
+
+      },
+      body: urlencodedPic
+    };
+
+    const addProfilePic = await (await fetch('http://localhost:3001/api/UserPic', requestOptionsPic)).json()
+    return addProfilePic
+
+  } catch (error) {
+
+    throw error
+
+  }
+
+}
+//Registra un nuevo usuario sin foto de perfil en la base de datos
+export const RegisterUsuario = async ({ usuario, password, email, name }) => {
+
+  var urlencoded = new URLSearchParams()
+  urlencoded.append("profilePic", "http://localhost:3001/public/uploads/user.png")
+  urlencoded.append("password", password)
+  urlencoded.append("userName", usuario)
+  urlencoded.append("name", name)
+  urlencoded.append("email", email)
+  urlencoded.append("seguidores", 0)
+  urlencoded.append("seguidos", 0)
+
+  const requestOptions = {
+    method: 'Post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+
+    },
+    body: urlencoded
+  };
   try {
 
     const addResponse = await fetch('http://localhost:3001/api/Usuarios', requestOptions).json()
@@ -115,6 +149,7 @@ export const addUsuario = async ({ form }) => {
     throw error
 
   }
+
 }
 
 //Loggea a un usuario dentro de la aplicacion

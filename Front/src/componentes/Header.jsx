@@ -1,4 +1,6 @@
 import {React, Component} from 'react'
+
+import Avatar from '@material-ui/core/Avatar';
 import logoTik from '../Assets/logo.jpg'
 import English from '../Assets/English.png'
 import Spanish from '../Assets/Spanish.png'
@@ -11,6 +13,8 @@ import LogIn from './Dialogos/DialogoLogIn'
 import {Link} from 'react-router-dom'
 import Translate from './Translate'
 import { loginUsuario } from '../Services/Api'
+import { RegisterUsuario } from '../Services/Api'
+import { RegisterUsuarioPP } from '../Services/Api'
 
 
 export default class Header extends Component{ 
@@ -21,11 +25,19 @@ export default class Header extends Component{
         this.state = {
             userName : "username",
             password :  "",
+            email : "",
+            name : "",
+            profilePic : null,
+            profilePicSrc : "",
             isLoading: false
         }
         this.handleOnChangeU = this.handleOnChangeU.bind(this)
         this.handleOnChangeP = this.handleOnChangeP.bind(this)
+        this.handleOnChangePP = this.handleOnChangePP.bind(this)
+        this.handleOnChangeN = this.handleOnChangeN.bind(this)
+        this.handleOnChangeE = this.handleOnChangeE.bind(this)
         this.handleOnLogIn = this.handleOnLogIn.bind(this)
+        this.handleOnRegister = this.handleOnRegister.bind(this)
     }
     handleOnChangeU(e){
         e.persist()
@@ -35,6 +47,29 @@ export default class Header extends Component{
         e.preventDefault()
     }
 
+    handleOnChangePP(e){
+        e.persist()
+        this.setState({
+            profilePic : e.target.files[0]
+        })
+        e.preventDefault()
+    }
+    
+    handleOnChangeE(e){
+        e.persist()
+        this.setState({
+            email : e.target.value
+        })
+        e.preventDefault()
+    }
+    
+    handleOnChangeN(e){
+        e.persist()
+        this.setState({
+            name : e.target.value
+        })
+        e.preventDefault()
+    }
     async handleOnLogIn(){
        const usuario = this.state.userName
        const password = this.state.password
@@ -45,6 +80,32 @@ export default class Header extends Component{
         }
         window.location.reload()
     }
+
+    async handleOnRegister(){
+        const email = this.state.email
+        const usuario = this.state.userName
+        const password = this.state.password
+        const name = this.state.name
+        this.setState({isLoading : true})
+        if (this.state.profilePic){
+            const profilePic = this.state.profilePic
+            try {
+                await RegisterUsuarioPP({usuario,password,email,name,profilePic})
+                this.setState({isLoading : false})
+            } catch (error) {
+                throw error
+            }
+        }else{
+            try {
+                await RegisterUsuario({usuario,password,email,name})
+                this.setState({isLoading : false})
+            } catch (error) {
+                throw error
+            }
+
+        }
+         window.location.reload()
+     }
     handleOnChangeP(e){
         e.persist()
         this.setState({
@@ -58,6 +119,7 @@ componentDidMount(){
         
         this.setState({
             userName : this.props.userName,
+            profilePicSrc : this.props.profilePic,
             isLoading : true
         })
     }
@@ -95,18 +157,22 @@ componentDidMount(){
                     <Link to="/">
                                 <img className="logoTik mx-auto" src={logoTik} alt="TikTak"/>
                     </Link>
-                            <span className="nav-tool-items mr-2 text-right" >       
-                       
-                                <LogOut handleOnLogOut = {this.props.handleOnLogOut}/>
-              
-                               <Link to="/myProfile">
-                                <h5>{this.state.userName}</h5>                          
-                            </Link> 
-                        
                     
-        
-                        <Dropdown>
-                            <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                            <span className="form-inline my-2 my-lg-0" >    
+                <span className="mx-auto">
+                    <Avatar className = "mx-auto" alt={this.state.userName} src={this.state.profilePicSrc}/>         
+
+                               <Link to="/myProfile">
+                                <p>{this.state.userName}</p>    
+                            </Link> 
+
+                </span>
+
+                  <span className = "ml-3" >
+                                <LogOut  handleOnLogOut = {this.props.handleOnLogOut}/>
+                                <span className="mx-auto">
+                        <Dropdown >
+                            <Dropdown.Toggle variant="secondary"  id="dropdown-basic">
                                 <GTranslateOutlinedIcon/>
                             </Dropdown.Toggle>
         
@@ -125,6 +191,11 @@ componentDidMount(){
                             </Dropdown.Menu>
         
                         </Dropdown>              
+
+                                </span>
+
+                  </span>
+                       
                         
                     </span>
                 </nav>
@@ -154,14 +225,16 @@ componentDidMount(){
             <Link to="/">
                         <img className="logoTik mx-auto" src={logoTik} alt="TikTak"/>
             </Link>
-                    <span className="nav-tool-items mr-2 text-right" >
+            <span className="form-inline my-2 my-lg-0" >
+                <span className = "mr-2">
 
                    <Register
-            /*        changeName
-                   changeUserN
-                   changeEmail
-                   changePassword
-                   changePP */
+                   handleOnRegister = {this.handleOnRegister}
+                   changeU = {this.handleOnChangeU}
+                   changeN = {this.handleOnChangeN}
+                   changeE = {this.handleOnChangeE}
+                   changePw = {this.handleOnChangeP}
+                   changePP = {this.handleOnChangePP}
                    />
 
                    <LogIn
@@ -169,16 +242,9 @@ componentDidMount(){
                    changeP = {this.handleOnChangeP}
                    changeU = {this.handleOnChangeU}
                    />
+                </span>
 
-            
-                   
-                    <Link to="/myProfile">
-                        <h5>{<Translate string={this.state.userName}/>}</h5>
-                    </Link> 
-                  
-            
-
-                <Dropdown>
+               <Dropdown>
                     <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                         <GTranslateOutlinedIcon/>
                     </Dropdown.Toggle>
