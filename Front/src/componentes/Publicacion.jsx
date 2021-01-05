@@ -36,6 +36,7 @@ export default class Publicacion extends Component {
     }
 
     async componentDidMount() {
+        
         if(this.props.match){
             const _id = this.props.match.params.publicacion
             const publicacionData = await getPublicacion({_id})

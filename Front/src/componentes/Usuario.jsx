@@ -2,9 +2,15 @@ import React,{Component} from 'react'
 import PublicacionesList from './PublicacionesList'
 import Translate from './Translate'
 import Loading from './loading'
+import IconButton from '@material-ui/core/IconButton';
 import { getUser,
-loadPublicacionesUser} from '../Services/Api'
-import { TimerOutlined } from '@material-ui/icons'
+    getUserLogged,
+loadPublicacionesUser,
+loadSeguidos,
+follow,
+unFollow} from '../Services/Api'
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
 export default class Usuario extends Component {
 
     constructor(...props){
@@ -16,9 +22,12 @@ export default class Usuario extends Component {
             seguidores : null,
             seguidos : null,
             publicacionesUsuario : null,
-            isLoading : true
+            isLoading : true,
+            userLogged: null,
+            siguiendo : false
         }
-        
+        this.handleOnFollow = this.handleOnFollow.bind(this)    
+        this.handleOnUnfollow = this.handleOnUnfollow.bind(this)    
     }
    async componentDidMount(){
     this.setState({
@@ -34,6 +43,23 @@ export default class Usuario extends Component {
         userData = usData
         const publiUser = await loadPublicacionesUser({userName})
         publicacionesUser = publiUser
+        const userLogged = await getUserLogged()
+        const nombreUsuario = userLogged.userName
+        this.setState({
+            userLogged : nombreUsuario
+        })
+        const seguidos = await loadSeguidos({nombreUsuario})
+        // eslint-disable-next-line array-callback-return
+        seguidos.map(seg => {
+
+            if(seg.seguido === userData.userName){
+                this.setState({
+                    siguiendo : true
+                })
+            }
+            }
+            )
+
     } catch (error) {
         
       
@@ -86,6 +112,27 @@ export default class Usuario extends Component {
             )
         }
       }
+
+    async handleOnFollow(){
+        const userLogged = this.state.userLogged
+        const userFollow = this.state.userName
+        try {
+            await follow({userLogged,userFollow})
+            window.location.reload()
+        } catch (error) {
+            throw error
+        }
+    }
+    async handleOnUnfollow(){
+        const userLogged = this.state.userLogged
+        const userUnfollow = this.state.userName
+        try {
+            await unFollow({userLogged,userUnfollow})
+            window.location.reload()
+        } catch (error) {
+            throw error
+        }
+    }
     render(){
      
    
@@ -94,7 +141,7 @@ export default class Usuario extends Component {
                 <Loading 
                     message = "Cargando Usuario"/>
             )
-        }else{
+        }else if(this.state.siguiendo){
         return(
             <React.Fragment>
 
@@ -103,11 +150,15 @@ export default class Usuario extends Component {
                 <div className="card">
                         <img className="card-img-top fotoPerfilUsuario" src={this.state.profilePic} alt="ProfilePic"/>
                         <div className="card-body userDescription">
-                            <h5 className="card-title">{<Translate string={"Usuario"}/>} </h5>
+                            <h5 className="card-title">{this.state.userName}    
+                            <IconButton onClick={this.handleOnUnfollow}> 
+                                <PersonAddDisabledIcon/>
+                            </IconButton>     
+                             </h5>
                             <p className="card-text"><small className="text-muted">{this.state.name}</small></p>
-                            <p className="card-text"><small className="text-muted">{this.state.userJake}</small></p> 
                             <p className="card-text"><small className="text-muted">Seguidores : {this.state.seguidores}</small></p>  
-                            <p className="card-text"><small className="text-muted">Seguidos : {this.state.seguidos}</small></p>  
+                            <p className="card-text"><small className="text-muted">Seguidos : {this.state.seguidos}</small></p>
+                        
                         </div>
                        
                 </div>
@@ -116,7 +167,54 @@ export default class Usuario extends Component {
                 <PublicacionesList
                 publicaciones_data = {this.state.publicacionesUsuario}/>
             </React.Fragment>   
-        )}
+        )}else if(!this.state.siguiendo && localStorage.getItem("token")){
+            return(
+                <React.Fragment>
+    
+                
+                <div className = "mx-auto">
+                    <div className="card">
+                            <img className="card-img-top fotoPerfilUsuario" src={this.state.profilePic} alt="ProfilePic"/>
+                            <div className="card-body userDescription">
+                                <h5 className="card-title">{this.state.userName} 
+                                <IconButton onClick={this.handleOnFollow}>
+                                    <PersonAddIcon/>
+                                </IconButton>   
+                                </h5>
+                                <p className="card-text"><small className="text-muted">{this.state.name}</small></p>
+                                <p className="card-text"><small className="text-muted">Seguidores : {this.state.seguidores}</small></p>  
+                                <p className="card-text"><small className="text-muted">Seguidos : {this.state.seguidos}</small></p>
+                               
+                            </div>
+                           
+                    </div>
+                    </div>
+                    <h1 className="mt-5 text-center ">{<Translate string={"Publicaciones"}/>}</h1>
+                    <PublicacionesList
+                    publicaciones_data = {this.state.publicacionesUsuario}/>
+                </React.Fragment>   
+            )}else {
+                return(
+                    <React.Fragment>
+        
+                    
+                    <div className = "mx-auto">
+                        <div className="card">
+                                <img className="card-img-top fotoPerfilUsuario" src={this.state.profilePic} alt="ProfilePic"/>
+                                <div className="card-body userDescription">
+                                    <h5 className="card-title">{this.state.userName} </h5>
+                                    <p className="card-text"><small className="text-muted">{this.state.name}</small></p>
+                                    <p className="card-text"><small className="text-muted">Seguidores : {this.state.seguidores}</small></p>  
+                                    <p className="card-text"><small className="text-muted">Seguidos : {this.state.seguidos}</small></p> 
+                                </div>
+                               
+                        </div>
+                        </div>
+                        <h1 className="mt-5 text-center ">{<Translate string={"Publicaciones"}/>}</h1>
+                        <PublicacionesList
+                        publicaciones_data = {this.state.publicacionesUsuario}/>
+                    </React.Fragment>   
+                )}
     }
 }
 Usuario.propTypes = {}

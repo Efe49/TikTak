@@ -245,6 +245,74 @@ export const loginUsuario = async ({ usuario, password }) => {
 
   }
 }
+//Loggea a un usuario dentro de la aplicacion
+export const follow = async ({ userLogged, userFollow }) => {
+
+  var urlencoded = new URLSearchParams()
+  urlencoded.append("seguido", userFollow)
+  urlencoded.append("seguidor", userLogged)
+
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': localStorage.getItem('token')
+    },
+    body: urlencoded
+  }
+
+  try {
+    const followResponse = await (await fetch('http://localhost:3001/api/Seguidores', requestOptions)).json()
+    var urlencodedU1 = new URLSearchParams()
+    urlencodedU1.append("seguido", userFollow)
+    urlencodedU1.append("seguidor", userLogged)
+
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': localStorage.getItem('token')
+      },
+      body: urlencodedU1
+    }
+
+    await fetch('http://localhost:3001/api/Usuarios/${userFollow}', requestOptionsU1)
+
+    return followResponse
+
+  } catch (error) {
+
+    throw error
+
+  }
+}
+
+//Deja de seguir a un usuario
+export const unFollow = async ({ userLogged, userUnfollow }) => {
+
+  var urlencoded = new URLSearchParams()
+  urlencoded.append("seguido", userUnfollow)
+  urlencoded.append("seguidor", userLogged)
+
+  const requestOptions = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': localStorage.getItem('token')
+    },
+    body: urlencoded
+  }
+
+  try {
+    const unFollowResponse = await (await fetch(`http://localhost:3001/api/Seguidores/${userLogged}`, requestOptions)).json()
+    return unFollowResponse
+
+  } catch (error) {
+
+    throw error
+
+  }
+}
 
 
 //Add  una publicacion a la base de datos

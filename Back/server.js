@@ -23,9 +23,7 @@ app.use('/public/uploads', express.static('public'));
 const isAuth = require('./api/middlewares/auth')
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/api/Seguidores', require('./api/Seguidores/routes/post_seguidor'));
 app.use('/api/Seguidores', require('./api/Seguidores/routes/get_seguidores'));
-app.use('/api/Seguidores', require('./api/Seguidores/routes/delete_seguidor'));
 app.use('/api/Usuario', require('./api/Usuarios/routes/post_login'));
 app.use('/api/Usuarios', require('./api/Usuarios/routes/post_usuario'));
 app.use('/api/Usuarios', require('./api/Usuarios/routes/get_usuario'));
@@ -33,6 +31,8 @@ app.use('/api/Usuarios', require('./api/Usuarios/routes/get_usuarios'));
 app.use('/api/Publicaciones', require('./api/Publicaciones/routes/get_publicaciones'));
 app.use('/api/Publicaciones', require('./api/Publicaciones/routes/get_publicacion'));
 app.use('/api/Comentarios', require('./api/Comentarios/routes/get_comentarios'));
+app.use('/api/Seguidores', isAuth, require('./api/Seguidores/routes/post_seguidor'));
+app.use('/api/Seguidores', isAuth, require('./api/Seguidores/routes/delete_seguidor'));
 app.use('/api/UserPic', isAuth, require('./api/Usuarios/routes/post_profilePic'));
 app.use('/api/Usuario', isAuth, require('./api/Usuarios/routes/get_usuarioLogged'));
 app.use('/api/Usuarios', isAuth, require('./api/Usuarios/routes/delete_usuario'));
