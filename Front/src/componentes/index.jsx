@@ -11,10 +11,10 @@ import { loadHomePageNotLogged,
 } from '../Services/Api'
 import Loading from './loading'
 import Home from './Home'
-import Login from './Login'
-import Registro from './Registro'
 import Usuario from './Usuario'
+import Publicacion from './Publicacion'
 import PublicacionAdd from './PublicacionAdd'
+import PublicacionesList from './PublicacionesList'
 import Header from './Header'
 import Footer from './Footer'
 import IdiomaContext from '../Context/IdiomaContext'
@@ -42,6 +42,7 @@ class App extends Component {
             userLogged: null,
             userPic: null,
             redirect: null,
+            allPublicaciones: null,
             preferredLocale: "es"
 
         }
@@ -60,6 +61,9 @@ class App extends Component {
 
             const allPosts = await loadHomePageNotLogged()
             Allpublicaciones = allPosts;
+            this.setState({
+                allPublicaciones : Allpublicaciones
+            })
 
         } catch (error) {
             
@@ -207,18 +211,18 @@ class App extends Component {
                         <Route exact path="/" render={(props)=>
                             <Home {...props} publicaciones_data={this.state.publicaciones_data}
                                 changeLanguage={this.changeLanguage} />} />
-                            <Route exact path="/Registro" render={(props)=>
-                                <Registro {...props} onAddUsuario={this.handleOnUserLogged()}
-                                    changeLanguage={this.changeLanguage} />} />
-                                <Route exact path="/Login" render={(props)=>
-                                    <Login {...props} onLoginUsuario={this.handleOnUserLogin()}
-                                        changeLanguage={this.changeLanguage} />} />
-                                    <Route exact path="/Usuario" render={(props)=>
+                                         <Route exact path="/Explore" render={(props)=>
+                                    <PublicacionesList {...props} 
+                                        changeLanguage={this.changeLanguage}
+                                        publicaciones_data = {this.state.allPublicaciones} />} />
+                                    <Route exact path="/Usuario/:usuario" render={(props)=>
                                         <Usuario {...props} changeLanguage={this.changeLanguage} />}/>
                                         <Route exact path="/PublicacionAdd" render={(props)=>
                                             <PublicacionAdd {...props} changeLanguage={this.changeLanguage} />}/>
-                                            <Route render={()=>
-                                                <h1>Not found!</h1>} />
+                                            <Route exact path="/Publicacion/:publicacion" render={(props)=>
+                                                <Publicacion {...props} changeLanguage={this.changeLanguage} />}/>
+                                                    <Route default render={()=>
+                                                     <h1>Not found!</h1>} />
 
                     </Switch>
                     <Footer changeLanguage={this.changeLanguage} />

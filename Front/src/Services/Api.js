@@ -23,7 +23,52 @@ export const getUserLogged = async () => {
 
   }
 }
+// Obtiene los datos de un usuario desde la api
+export const getUser = async ({ userName }) => {
 
+  const requestOptions = {
+
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+
+    },
+  };
+
+  try {
+
+    const user = await fetch(`http://localhost:3001/api/Usuarios/${userName}`, requestOptions)
+    return user.json()
+
+  } catch (error) {
+
+    throw error
+
+  }
+}
+// Obtiene los datos de una publicacion desde la api
+export const getPublicacion = async ({ _id }) => {
+
+  const requestOptions = {
+
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+
+    },
+  };
+
+  try {
+
+    const publi = await fetch(`http://localhost:3001/api/Publicaciones/${_id}`, requestOptions)
+    return publi.json()
+
+  } catch (error) {
+
+    throw error
+
+  }
+}
 //Obtiene la pagina de home para alguien no loggeado o sin seguidos
 export const loadHomePageNotLogged = async () => {
   try {
@@ -70,7 +115,25 @@ export const loadHomePageLogged = ({ seguidos, publicaciones }) => {
   return publicacionesSeguidos
 
 }
+//Obtiene las publicaciones de un usuario
+export const loadPublicacionesUser = async ({ userName }) => {
+  const publicaciones = await loadHomePageNotLogged()
+  let publicacionesUser = []
 
+
+  // eslint-disable-next-line array-callback-return
+  publicaciones.map(publicacion => {
+
+    if (userName === publicacion.creador) {
+      publicacionesUser.push(publicacion);
+    }
+
+  })
+
+
+  return publicacionesUser
+
+}
 //Registra un nuevo usuario con foto de perfil en la base de datos
 export const RegisterUsuarioPP = async ({ usuario, password, email, name, profilePic }) => {
 

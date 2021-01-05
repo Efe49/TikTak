@@ -11,7 +11,6 @@ import LogOut from './Dialogos/DialogoLogOut'
 import Register from './Dialogos/DialogoRegister'
 import LogIn from './Dialogos/DialogoLogIn'
 import {Link} from 'react-router-dom'
-import Translate from './Translate'
 import { loginUsuario } from '../Services/Api'
 import { RegisterUsuario } from '../Services/Api'
 import { RegisterUsuarioPP } from '../Services/Api'
@@ -148,7 +147,7 @@ componentDidMount(){
                     
                     
                                 <button className="btn border-dark rounded-circle ml-5">
-                            <Link to="/">
+                            <Link to="/Explore">
                                 <Explore/>
                             </Link>
                         </button>
@@ -162,7 +161,8 @@ componentDidMount(){
                 <span className="mx-auto">
                     <Avatar className = "mx-auto" alt={this.state.userName} src={this.state.profilePicSrc}/>         
 
-                               <Link to="/myProfile">
+                    <Link to={{pathname : `/Usuario/${this.state.userName}`,
+                                        usuario : this.state.userName}}>
                                 <p>{this.state.userName}</p>    
                             </Link> 
 

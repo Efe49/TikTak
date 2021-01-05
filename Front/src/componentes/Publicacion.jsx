@@ -7,8 +7,12 @@ import {
     CommentOutlined,
     Share
 } from '@material-ui/icons'
+
+import {getPublicacion} from '../Services/Api'
+import {Link} from 'react-router-dom'
 import ComentariosList from './ComentariosList'
 import comentarios_data from '../Files/comentarios.json'
+import Loading from './loading'
 
 export default class Publicacion extends Component {
     _isMounted = false;
@@ -21,7 +25,7 @@ export default class Publicacion extends Component {
             id: this.props.id,
             contenido: this.props.contenido,
             titulo: this.props.titulo,
-            descripcion: this.props.Descripcion,
+            descripcion: this.props.descripcion,
             meGusta: this.props.meGusta,
             noMeGusta: this.props.noMeGusta,
             creador: this.props.creador
@@ -32,9 +36,23 @@ export default class Publicacion extends Component {
     }
 
     async componentDidMount() {
+        if(this.props.match){
+            const _id = this.props.match.params.publicacion
+            const publicacionData = await getPublicacion({_id})
+            this.setState({
+                _id: publicacionData._id,
+                id: publicacionData.id,
+                contenido: publicacionData.contenido,
+                titulo: publicacionData.titulo,
+                descripcion: publicacionData.Descripcion,
+                meGusta: publicacionData.meGusta,
+                noMeGusta: publicacionData.noMeGusta,
+                creador: publicacionData.creador
+            })
+        }
         this._isMounted = true;
         try {
-            const fetchResponse = await fetch('http://localhost:3001/api/comentarios/' + this.props.id);
+            const fetchResponse = await fetch('http://localhost:3001/api/comentarios/' + this.state.id);
             const data = await fetchResponse.json();
             if (this._isMounted) {
                 this.setState({
@@ -56,12 +74,6 @@ export default class Publicacion extends Component {
 
         var urlencoded = new URLSearchParams()
         urlencoded.append("meGusta", meGustaNuevo + "\n")
-        /* urlencoded.append("password", usuario.password+"\n")
-        urlencoded.append("userName", usuario.userName+"\n")
-        urlencoded.append("name", usuario.name+"\n")
-        urlencoded.append("email", usuario.email+"\n")
-        urlencoded.append("seguidores", usuario.seguidores+"\n")
-        urlencoded.append("seguidos", usuario.seguidos+"\n") */
 
         const requestOptions = {
             method: 'put',
@@ -94,12 +106,7 @@ export default class Publicacion extends Component {
 
         var urlencoded = new URLSearchParams()
         urlencoded.append("meGusta", nomeGustaNuevo + "\n")
-        /* urlencoded.append("password", usuario.password+"\n")
-        urlencoded.append("userName", usuario.userName+"\n")
-        urlencoded.append("name", usuario.name+"\n")
-        urlencoded.append("email", usuario.email+"\n")
-        urlencoded.append("seguidores", usuario.seguidores+"\n")
-        urlencoded.append("seguidos", usuario.seguidos+"\n") */
+
 
         const requestOptions = {
             method: 'put',
@@ -127,12 +134,15 @@ export default class Publicacion extends Component {
         e.preventDefault()
     }
     render(){
+        if(this._isMounted){
+
+        
         return(
             <li key ={this.props.keyP} className="post-box card ">
                 <div className="align-self-center mx-auto">
 
                     <video className="post embed-responsive"  loop autoPlay muted  controls>
-                        <source src={this.props.contenido} type="video/mp4"/>
+                        <source src = {this.state.contenido} type="video/mp4"/>
                     </video>
                     
                     <div className="card-body">
@@ -159,13 +169,21 @@ export default class Publicacion extends Component {
                             </li>
                         </ul>
             
-                        <a className="user mt-3 mb-2" href="https://github.com/">
-                            <h2 className="card-author">{this.props.creador}</h2>
-                        </a>       
-                        <a className="title text-center" href="https://github.com/"> 
-                            <h3 className="card-title">{this.props.titulo}</h3>
-                        </a>
-                        <p className="card-text">{this.props.descripcion}</p>
+                    
+                            <Link to={{pathname : `/Usuario/${this.state.creador}`,
+                                        usuario : this.state.creador}}>
+                            <h2 className="card-author">{this.state.creador}</h2>
+
+                            </Link>
+                         
+                        <Link to={{pathname : `/Publicacion/${this.state._id}`,
+                                    publicacion : this.state.publicacion }}>
+
+                            <h3 className="card-title">{this.state.titulo}</h3>
+
+                        </Link>
+                       
+                        <p className="card-text">{this.state.descripcion}</p>
 
                         COMENTARIOS DESTACADOS
                    
@@ -175,6 +193,11 @@ export default class Publicacion extends Component {
                     </div>
                 </div>
             </li>)
+            }else{
+                return(
+                <Loading
+                message="Cargando Publicacion"/>)
+            }
     }
 }
 

@@ -10,6 +10,7 @@ const PublicacionesList = (props) => (
                     (publicacion,i) => (
 
                         <Publicacion
+                            publicacion = {publicacion}
                             keyP = {i}
                             _id = {publicacion._id}
                             id = {publicacion.id}
