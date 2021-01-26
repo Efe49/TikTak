@@ -6,16 +6,15 @@ const Publicacion = require('../model/Publicacion');
 const router = express.Router();
 
 router.route('/')
-    .get((req,res)=>{
-        Publicacion.find({/*Podemos poner aqui terminos para busquedas especificas como 
-        username : 'Pablo'  se deja en vacio para  showAll*/}, (err,publicaciones)=>{
-            if(err){
+    .get((req, res) => {
+        Publicacion.find({}).sort({ _id: -1 }).exec(function (err, publicaciones) {
+            if (err) {
                 res.status(400).json(err);
-            }else{
-                res.json(publicaciones); 
+            } else {
+                res.json(publicaciones);
             }
-           
+
         });
     });
 
-    module.exports = router;
+module.exports = router;

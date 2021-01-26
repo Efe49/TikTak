@@ -31,6 +31,7 @@ app.use('/api/Usuarios', require('./api/Usuarios/routes/get_usuarios'));
 app.use('/api/Publicaciones', require('./api/Publicaciones/routes/get_publicaciones'));
 app.use('/api/Publicaciones', require('./api/Publicaciones/routes/get_publicacion'));
 app.use('/api/Comentarios', require('./api/Comentarios/routes/get_comentarios'));
+app.use('/api/ContentPost', isAuth, require('./api/Publicaciones/routes/post_content'));
 app.use('/api/Seguidores', isAuth, require('./api/Seguidores/routes/post_seguidor'));
 app.use('/api/Seguidores', isAuth, require('./api/Seguidores/routes/delete_seguidor'));
 app.use('/api/UserPic', isAuth, require('./api/Usuarios/routes/post_profilePic'));

@@ -141,7 +141,7 @@ export default class Usuario extends Component {
                 <Loading 
                     message = "Cargando Usuario"/>
             )
-        }else if(this.state.siguiendo){
+        }else if(this.state.siguiendo && this.state.userLogged !== this.state.userName){
         return(
             <React.Fragment>
 
@@ -167,7 +167,7 @@ export default class Usuario extends Component {
                 <PublicacionesList
                 publicaciones_data = {this.state.publicacionesUsuario}/>
             </React.Fragment>   
-        )}else if(!this.state.siguiendo && localStorage.getItem("token")){
+        )}else if(!this.state.siguiendo && localStorage.getItem("token") && this.state.userLogged !== this.state.userName){
             return(
                 <React.Fragment>
     
@@ -193,7 +193,7 @@ export default class Usuario extends Component {
                     <PublicacionesList
                     publicaciones_data = {this.state.publicacionesUsuario}/>
                 </React.Fragment>   
-            )}else {
+            )}else if(this.state.userName === this.state.userLogged){
                 return(
                     <React.Fragment>
         
@@ -212,7 +212,34 @@ export default class Usuario extends Component {
                         </div>
                         <h1 className="mt-5 text-center ">{<Translate string={"Publicaciones"}/>}</h1>
                         <PublicacionesList
-                        publicaciones_data = {this.state.publicacionesUsuario}/>
+                        publicaciones_data = {this.state.publicacionesUsuario}
+                        propietario = {true}
+                        />
+                        
+                    </React.Fragment>   
+                )
+            }else {
+                return(
+                    <React.Fragment>
+        
+                    
+                    <div className = "mx-auto">
+                        <div className="card">
+                                <img className="card-img-top fotoPerfilUsuario" src={this.state.profilePic} alt="ProfilePic"/>
+                                <div className="card-body userDescription">
+                                    <h5 className="card-title">{this.state.userName} </h5>
+                                    <p className="card-text"><small className="text-muted">{this.state.name}</small></p>
+                                    <p className="card-text"><small className="text-muted">Seguidores : {this.state.seguidores}</small></p>  
+                                    <p className="card-text"><small className="text-muted">Seguidos : {this.state.seguidos}</small></p> 
+                                </div>
+                               
+                        </div>
+                        </div>
+                        <h1 className="mt-5 text-center ">{<Translate string={"Publicaciones"}/>}</h1>
+                        <PublicacionesList
+                        publicaciones_data = {this.state.publicacionesUsuario}
+                        />
+                        
                     </React.Fragment>   
                 )}
     }

@@ -5,15 +5,18 @@ import logoTik from '../Assets/logo.jpg'
 import English from '../Assets/English.png'
 import Spanish from '../Assets/Spanish.png'
 import { Dropdown} from 'react-bootstrap'
-import { AddAPhoto, Explore} from '@material-ui/icons'
+import {Explore} from '@material-ui/icons'
 import GTranslateOutlinedIcon from '@material-ui/icons/GTranslateOutlined';
 import LogOut from './Dialogos/DialogoLogOut'
 import Register from './Dialogos/DialogoRegister'
 import LogIn from './Dialogos/DialogoLogIn'
+import AddPost from './Dialogos/DialogoAddPost'
 import {Link} from 'react-router-dom'
 import { loginUsuario } from '../Services/Api'
 import { RegisterUsuario } from '../Services/Api'
 import { RegisterUsuarioPP } from '../Services/Api'
+import { addPublicacion } from '../Services/Api'
+import {getUserLogged } from '../Services/Api'
 
 
 export default class Header extends Component{ 
@@ -28,7 +31,10 @@ export default class Header extends Component{
             name : "",
             profilePic : null,
             profilePicSrc : "",
-            isLoading: false
+            isLoading: false,
+            contenido: "",
+            titulo : "",
+            descripcion : ""
         }
         this.handleOnChangeU = this.handleOnChangeU.bind(this)
         this.handleOnChangeP = this.handleOnChangeP.bind(this)
@@ -37,6 +43,10 @@ export default class Header extends Component{
         this.handleOnChangeE = this.handleOnChangeE.bind(this)
         this.handleOnLogIn = this.handleOnLogIn.bind(this)
         this.handleOnRegister = this.handleOnRegister.bind(this)
+        this.handleOnChangeTitle = this.handleOnChangeTitle.bind(this)
+        this.handleOnChangeDescription = this.handleOnChangeDescription.bind(this)
+        this.handleOnChangeContent = this.handleOnChangeContent.bind(this)
+        this.handleOnAddPublicacion = this.handleOnAddPublicacion.bind(this)        
     }
     handleOnChangeU(e){
         e.persist()
@@ -45,7 +55,47 @@ export default class Header extends Component{
         })
         e.preventDefault()
     }
+	handleOnChangeTitle(e){
+		e.persist()
+		this.setState({
+				titulo : e.target.value
+		})
+		e.preventDefault()
+	}
+	handleOnChangeDescription(e){
+		e.persist()
+		this.setState({
+				descripcion : e.target.value
+		})
+		e.preventDefault()
+	}
+	handleOnChangeContent(e){
+		e.persist()
+		this.setState({
+				contenido : e.target.files[0]
+		})
+		e.preventDefault()
+	}
 
+	async handleOnAddPublicacion(){
+		
+		const titulo = this.state.titulo
+		const descripcion = this.state.descripcion
+		const contenido = this.state.contenido
+		try{
+			const user =  await getUserLogged()
+			const userName = user.userName
+			await addPublicacion({titulo,descripcion,contenido,userName})
+		}catch(error){
+			throw error
+		}
+		window.location.reload()
+		
+
+            
+       
+
+	}
     handleOnChangePP(e){
         e.persist()
         this.setState({
@@ -138,11 +188,15 @@ componentDidMount(){
                     <nav className ="navbar headerTik justify-content-between fixed-top mb-5">
 
                     <div className="home-buttons">
-                        <button className="btn border-dark rounded-circle ml-5">
-                            <Link to="/PublicacionAdd">
-                                <AddAPhoto/>
-                            </Link>
-                        </button>
+                      
+                            <AddPost
+                   handleOnAddPublicacion = {this.handleOnAddPublicacion}
+                   changeTitle = {this.handleOnChangeTitle}
+                   changeContent = {this.handleOnChangeContent}
+                   changeDescription = {this.handleOnChangeDescription}
+                   />
+                           
+                        
                     
                     
                     
@@ -207,11 +261,12 @@ componentDidMount(){
         <nav className ="navbar headerTik justify-content-between fixed-top mb-5">
 
             <div className="home-buttons">
-                <button className="btn border-dark rounded-circle ml-5">
-                    <Link to="/PublicacionAdd">
-                        <AddAPhoto/>
-                    </Link>
-                </button>
+            <AddPost
+                   handleOnAddPublicacion = {this.handleOnAddPublicacion}
+                   changeTitle = {this.handleOnchangeTitle}
+                   changeContent = {this.handleOnchangeContent}
+                   changeDescription = {this.handleOnchangeDescription}
+                   />
             
             
             

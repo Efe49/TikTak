@@ -138,7 +138,7 @@ export const loadPublicacionesUser = async ({ userName }) => {
 export const RegisterUsuarioPP = async ({ usuario, password, email, name, profilePic }) => {
 
   var urlencoded = new URLSearchParams()
-  urlencoded.append("profilePic", "http://localhost:3001/public/uploads/user.png")
+  urlencoded.append("profilePic", profilePic)
   urlencoded.append("password", password)
   urlencoded.append("userName", usuario)
   urlencoded.append("name", name)
@@ -181,6 +181,52 @@ export const RegisterUsuarioPP = async ({ usuario, password, email, name, profil
   }
 
 }
+/* export const addPublicacion = async ({ titulo, descripcion, video }) => {
+
+  var urlencoded = new URLSearchParams()
+  urlencoded.append("profilePic", "http://localhost:3001/public/uploads/user.png")
+  urlencoded.append("password", password)
+  urlencoded.append("userName", usuario)
+  urlencoded.append("name", name)
+  urlencoded.append("email", email)
+  urlencoded.append("seguidores", 0)
+  urlencoded.append("seguidos", 0)
+
+  const requestOptions = {
+    method: 'Post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+
+    },
+    body: urlencoded
+  };
+  try {
+
+    const addResponse = await (await fetch('http://localhost:3001/api/Usuarios', requestOptions)).json()
+    localStorage.setItem('token', "Bearer " + addResponse.token)
+    var urlencodedPic = new FormData()
+    urlencodedPic.append("file", profilePic)
+
+
+    const requestOptionsPic = {
+      method: 'Post',
+      headers: {
+        'Authorization': localStorage.getItem('token')
+
+      },
+      body: urlencodedPic
+    };
+
+    const addProfilePic = await (await fetch('http://localhost:3001/api/UserPic', requestOptionsPic)).json()
+    return addProfilePic
+
+  } catch (error) {
+
+    throw error
+
+  }
+
+} */
 //Registra un nuevo usuario sin foto de perfil en la base de datos
 export const RegisterUsuario = async ({ usuario, password, email, name }) => {
 
@@ -267,7 +313,7 @@ export const follow = async ({ userLogged, userFollow }) => {
     urlencodedU1.append("seguido", userFollow)
     urlencodedU1.append("seguidor", userLogged)
 
-    const requestOptions = {
+    const requestOptionsU1 = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -316,34 +362,81 @@ export const unFollow = async ({ userLogged, userUnfollow }) => {
 
 
 //Add  una publicacion a la base de datos
-export const addPublicacion = async ({ form, userName }) => {
+export const addPublicacion = async ({ titulo, descripcion, contenido, userName }) => {
 
-  var urlencoded = new URLSearchParams()
-  urlencoded.append("titulo", form.titulo.value)
-  urlencoded.append("contenido", "deMomentoVacio")
-  urlencoded.append("creador", userName)
-  urlencoded.append("Descripcion", form.descripcion.value)
-  urlencoded.append("meGusta", 0)
-  urlencoded.append("noMeGusta", 0)
 
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': localStorage.getItem('token')
-    },
-    body: urlencoded
-  };
+
 
   try {
+    var urlencodedPic = new FormData()
+    urlencodedPic.append("file", contenido)
 
-    const addPublicacionResponse = await fetch('http://localhost:3001/api/Publicaciones', requestOptions)
-    return addPublicacionResponse.json()
+
+    const requestOptionsPic = {
+      method: 'Post',
+      headers: {
+        'Authorization': localStorage.getItem('token'),
+
+      },
+      body: urlencodedPic
+    };
+
+    await fetch('http://localhost:3001/api/ContentPost', requestOptionsPic).then((result) => result.json()).then(async (message) => {
+
+      const content = message
+      var urlencoded = new URLSearchParams()
+      urlencoded.append("titulo", titulo)
+      urlencoded.append("contenido", content.message)
+      urlencoded.append("creador", userName)
+      urlencoded.append("Descripcion", descripcion)
+      urlencoded.append("meGusta", 0)
+      urlencoded.append("noMeGusta", 0)
+
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': localStorage.getItem('token')
+        },
+        body: urlencoded
+      };
+      const publicacion = await fetch('http://localhost:3001/api/Publicaciones', requestOptions)
+      return publicacion
+    })
+
+
+
 
   } catch (error) {
 
     throw error
 
   }
+}
+
+export const deletePublicacion = async ({ identificadorPost }) => {
+
+  const requestOptions = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': localStorage.getItem('token')
+    },
+
+  };
+  try {
+
+
+    const data = await fetch('http://localhost:3001/api/Publicaciones/' + identificadorPost, requestOptions)
+
+    console.log(data)
+
+
+  } catch (error) {
+    throw error
+  }
+
+
+
 }
 
